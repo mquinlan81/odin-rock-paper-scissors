@@ -4,14 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h1>Rock Paper Scissors</h1>
-    <p>
-      Open the console to play; Ctrl + Shift + J (Windows) or Cmd + Option + J
-      (Mac)
-    </p>
+    <h1 class="title">Rock Paper Scissors</h1>
 
+    <div class="game-board">
+      <h2 class="select-text">Make a selection</h2>
+      <div class="btn-display">
+        <button id="rock-btn" class="select-btn">Rock</button>
+        <button id="paper-btn" class="select-btn">Paper</button>
+        <button id="scissors-btn" class="select-btn">Scissors</button>
+      </div>
+
+      <div id="result-container"></div>
+      <h3 class="result" id="result-text"></h3>
+      <div class="selections">
+        <div class="selection">
+          <h3 id="player-name">Player</h3>
+          <div id="player-selection-display" class="selection-display">
+            <p id="player-selection-img">✂️</p>
+          </div>
+
+          <div class="score-board">
+            <p id="player-score-title">Player Score</p>
+            <div class="score">
+              <p id="player-score">0</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="selection">
+          <h3>Computer</h3>
+          <div id="computer-selection-display" class="selection-display">
+            <p id="computer-selection-img">🪨</p>
+          </div>
+          <div class="score-board">
+            <p>Computer Score</p>
+            <div class="score">
+              <p id="computer-score">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 🪨 🧻 -->
     <script src="main.js"></script>
   </body>
 </html>
