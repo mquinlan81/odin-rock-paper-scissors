@@ -49,13 +49,13 @@ startGameBtn.addEventListener('click', () => {
 });
 
 function playGame(playerName, rounds) {
-  console.log(playerName);
-  console.log(rounds);
+  // console.log(playerName);
+  // console.log(rounds);
   setPlayerName(playerName);
-  playRound(playerName);
+  playRound(playerName, rounds);
 }
 
-function playRound(playerName) {
+function playRound(playerName, rounds) {
   selectBtns.forEach((element) => {
     element.addEventListener('click', (e) => {
       let playerChoice = element.innerText;
@@ -63,7 +63,7 @@ function playRound(playerName) {
       playerSelectionImg.innerText = choiceImg[choiceIndex];
       resultContainer.appendChild(resultText);
       let computerChoice = getComputerChoice();
-      getWinner(playerName, playerChoice, computerChoice);
+      getWinner(playerName, playerChoice, computerChoice, rounds);
     });
   });
 }
@@ -76,9 +76,8 @@ function getComputerChoice() {
   return computerChoice;
 }
 
-function getWinner(name, player, computer) {
+function getWinner(name, player, computer, rounds) {
   if (player === computer) {
-    // round++;
     resultText.textContent = "It's a tie";
   } else if (
     (player == 'Rock' && computer == 'Paper') ||
@@ -87,11 +86,11 @@ function getWinner(name, player, computer) {
   ) {
     round++;
     computerScore++;
-    console.log(
-      `Round ${round} | Player ${playerScore} | Computer ${computerScore}`
-    );
     updateScoreboard();
     resultText.textContent = 'Computer Wins!';
+    if (computerScore > rounds / 2) {
+      endGame('computer', playerScore, computerScore);
+    }
   } else if (
     (player == 'Rock' && computer == 'Scissors') ||
     (player == 'Paper' && computer == 'Rock') ||
@@ -99,11 +98,11 @@ function getWinner(name, player, computer) {
   ) {
     round++;
     playerScore++;
-    console.log(
-      `Round ${round} | Player ${playerScore} | Computer ${computerScore}`
-    );
     updateScoreboard();
     resultText.textContent = `${name} Wins!`;
+    if (playerScore > rounds / 2) {
+      endGame(name, playerScore, computerScore);
+    }
   }
 }
 
@@ -117,4 +116,24 @@ function setPlayerName(playerName) {
   document.querySelector(
     '#player-score-title'
   ).textContent = `${playerName}'s Score`;
+}
+
+function endGame(playerName, playerScore, computerScore) {
+  if (playerName === 'computer') {
+    document.querySelector('#modal-header-text').textContent = `
+    Computer wins! | ${computerScore} - ${playerScore}
+    `;
+  } else {
+    document.querySelector('#modal-header-text').textContent = `
+    ${playerName} wins! | ${playerScore} - ${computerScore}
+    `;
+  }
+  modal.style.display = 'flex';
+  document.querySelector('#modal-content').innerHTML = `
+  <button id='play-again' class='play again' onclick='playAgain'>Play Again</button>
+  `;
+}
+
+function playAgain() {
+  window.location.reload();
 }
