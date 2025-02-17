@@ -27,7 +27,7 @@
       <h3 class="result" id="result-text"></h3>
       <div class="selections">
         <div class="selection">
-          <h3 id="player-name">Player</h3>
+          <h3 id="player-name-txt">Player</h3>
           <div id="player-selection-display" class="selection-display">
             <p id="player-selection-img">✂️</p>
           </div>
@@ -46,7 +46,7 @@
             <p id="computer-selection-img">🪨</p>
           </div>
           <div class="score-board">
-            <p>Computer Score</p>
+            <p>Computer's Score</p>
             <div class="score">
               <p id="computer-score">0</p>
             </div>
@@ -55,6 +55,35 @@
       </div>
     </div>
     <!-- 🪨 🧻 -->
+    <div id="modal" class="modal">
+      <div id="status-modal" class="status-modal">
+        <div id="modal-header" class="modal-header">
+          <h2>Welcome to Rock, Paper, Scissors!</h2>
+        </div>
+
+        <div id="modal-content" class="modal-content">
+          <form class="modal-form" action="">
+            <label for="player-name-input">What's your name?</label><br />
+            <input
+              id="player-name-input"
+              class="player-name"
+              type="text"
+              autofocus
+            /><br />
+            <p>A best-of how many would you like to play?</p>
+            <div id="rounds-btn-container" class="rounds-btn-container">
+              <button type="button" id="round-btn" class="round-btn selected">
+                3
+              </button>
+              <button type="button" id="round-btn" class="round-btn">5</button>
+              <button type="button" id="round-btn" class="round-btn">7</button>
+            </div>
+          </form>
+          <button id="start-game-btn" class="start-game-btn">Start Game</button>
+        </div>
+      </div>
+    </div>
+
     <script src="main.js"></script>
   </body>
 </html>

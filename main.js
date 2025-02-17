@@ -1,6 +1,11 @@
+const modal = document.querySelector('#modal');
+const closeBtn = document.querySelector('#close-btn');
+const startGameBtn = document.querySelector('#start-game-btn');
+const modalContent = document.querySelector('#modal-content');
+const roundBtns = document.querySelectorAll('#round-btn');
+const playerNameInput = document.querySelector('#player-name-input');
 const resultContainer = document.querySelector('#result-container');
 const resultText = document.querySelector('#result-text');
-const playerNameTxt = document.querySelector('#player-name');
 const playerSelectionImg = document.querySelector('#player-selection-img');
 const computerSelectionImg = document.querySelector('#computer-selection-img');
 const selectBtns = Array.from(document.querySelectorAll('.select-btn'));
@@ -12,33 +17,56 @@ const computerSelectionDisplay = document.querySelector(
 );
 let playerScoreTxt = document.querySelector('#player-score');
 let computerScoreTxt = document.querySelector('#computer-score');
-let playerScoreTitle = document.querySelector('#player-score-title');
 
 let choices = ['Rock', 'Paper', 'Scissors'];
 let choiceImg = ['🪨', '🧻', '✂️'];
 
-let playerName = prompt('What is your name?');
-playerScoreTitle.textContent = playerName;
-playerNameTxt.textContent = playerName;
-
 let round = 0;
-let playerChoice;
+// let playerChoice;
 
 playerScore = 0;
 computerScore = 0;
 
-selectBtns.forEach((element) => {
-  element.addEventListener('click', (e) => {
-    playerChoice = element.innerText;
-    let choiceIndex = choices.indexOf(playerChoice);
-    playerSelectionImg.innerText = choiceImg[choiceIndex];
-    resultContainer.appendChild(resultText);
-    let computerChoice = getComputerChoice();
-    console.log(computerChoice);
-    console.log(playerChoice, computerChoice);
-    playRound(playerChoice, computerChoice);
+roundBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    roundBtns.forEach((btn) => {
+      btn.classList.remove('selected');
+    });
+    btn.classList.add('selected');
   });
 });
+
+startGameBtn.addEventListener('click', () => {
+  let playerName = playerNameInput.value;
+
+  roundBtns.forEach((btn) => {
+    if (btn.classList.contains('selected')) {
+      let roundsToPlay = btn.textContent;
+      playGame(playerName, roundsToPlay);
+    }
+  });
+  modal.style.display = 'none';
+});
+
+function playGame(playerName, rounds) {
+  console.log(playerName);
+  console.log(rounds);
+  setPlayerName(playerName);
+  playRound(playerName);
+}
+
+function playRound(playerName) {
+  selectBtns.forEach((element) => {
+    element.addEventListener('click', (e) => {
+      let playerChoice = element.innerText;
+      let choiceIndex = choices.indexOf(playerChoice);
+      playerSelectionImg.innerText = choiceImg[choiceIndex];
+      resultContainer.appendChild(resultText);
+      let computerChoice = getComputerChoice();
+      getWinner(playerName, playerChoice, computerChoice);
+    });
+  });
+}
 
 function getComputerChoice() {
   let random = Math.round(Math.random() * 2);
@@ -48,9 +76,9 @@ function getComputerChoice() {
   return computerChoice;
 }
 
-function playRound(player, computer) {
+function getWinner(name, player, computer) {
   if (player === computer) {
-    round++;
+    // round++;
     resultText.textContent = "It's a tie";
   } else if (
     (player == 'Rock' && computer == 'Paper') ||
@@ -60,7 +88,7 @@ function playRound(player, computer) {
     round++;
     computerScore++;
     console.log(
-      `Round ${round} | player ${playerScore} | Computer ${computerScore}`
+      `Round ${round} | Player ${playerScore} | Computer ${computerScore}`
     );
     updateScoreboard();
     resultText.textContent = 'Computer Wins!';
@@ -71,13 +99,22 @@ function playRound(player, computer) {
   ) {
     round++;
     playerScore++;
-    console.log(`player ${playerScore} | Computer ${computerScore}`);
+    console.log(
+      `Round ${round} | Player ${playerScore} | Computer ${computerScore}`
+    );
     updateScoreboard();
-    resultText.textContent = `${playerName} Wins!`;
+    resultText.textContent = `${name} Wins!`;
   }
 }
 
 function updateScoreboard() {
   playerScoreTxt.textContent = playerScore;
   computerScoreTxt.textContent = computerScore;
+}
+
+function setPlayerName(playerName) {
+  document.querySelector('#player-name-txt').textContent = playerName;
+  document.querySelector(
+    '#player-score-title'
+  ).textContent = `${playerName}'s Score`;
 }
